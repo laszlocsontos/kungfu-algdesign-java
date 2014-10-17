@@ -42,6 +42,7 @@ public abstract class AbstractMergeSortTest {
     mergeSort.sort(EMPTY_ARRAY);
   }
 
+  @Test
   public void testSortSmallInput() {
     MergeSort mergeSort = getMergeSort();
 
@@ -57,11 +58,11 @@ public abstract class AbstractMergeSortTest {
   private static final Integer[] EMPTY_ARRAY = new Integer[0];
 
   private static final Integer[] UNSORTED_ARRAY = {
-    3, 1, 7, 8, 3, 3, 5, 9, 100, 4, 2, 8, 1, 3, 4, 1 ,6 ,7, 1, 6, 2, 345, 44, 333, 4234234, 2342, 32
+    3, 1, 7, 8, 3, 3, 5, 9, 100, 4, 2, 8, 1, 3, null, 1 ,6 ,7, 1, 6, 2, 345, 44, 333, 4234234, 2342
   };
 
   private static final Integer[] SORTED_ARRAY = {
-    1, 1, 1, 1, 2, 2, 3, 3, 3, 3, 4, 4, 5, 6, 6, 7, 7, 8, 8, 9, 32, 44, 100, 333, 345, 2342, 4234234
+    null, 1, 1, 1, 1, 2, 2, 3, 3, 3, 3, 4, 5, 6, 6, 7, 7, 8, 8, 9, 44, 100, 333, 345, 2342, 4234234
   };
 
 }
