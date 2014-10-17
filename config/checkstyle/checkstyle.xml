@@ -33,7 +33,7 @@
         </module>
 
     <module name="SuppressionFilter">
-        <property name="file" value="checkstyle-suppressions.xml"/>
+        <property name="file" value="config/checkstyle/checkstyle-suppressions.xml"/>
     </module>
 
     <module name="TreeWalker">
@@ -183,7 +183,7 @@
         </module>
     </module>
     <module name="Header">
-            <property name="headerFile" value="copyright.txt"/>
+            <property name="headerFile" value="config/checkstyle/copyright.txt"/>
             <property name="fileExtensions" value="java"/>
             <property name="id" value="header"/>
     </module>
