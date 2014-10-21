@@ -28,33 +28,31 @@ import java.util.Arrays;
 public abstract class AbstractMergeSort<T extends Comparable<T>> extends AbstractSort<T> {
 
   protected void merge(T[] left, T[] right, T[] array) {
-    int i = 0, j = 0;
+    int leftIndex = 0;
+    int rightIndex = 0;
 
-    while (i < left.length || j < right.length) {
-      int k = i + j;
+    while (leftIndex < left.length || rightIndex < right.length) {
+      int index = leftIndex + rightIndex;
 
-      if (i < left.length && j < right.length) {
-        if (isLessThenOrEquals(left[i], right[j])) {
-          array[k] = left[i++];
+      if (leftIndex < left.length && rightIndex < right.length) {
+        if (isLessThenOrEquals(left[leftIndex], right[rightIndex])) {
+          array[index] = left[leftIndex++];
+        } else {
+          array[index] = right[rightIndex++];
         }
-        else {
-          array[k] = right[j++];
-        }
-      }
-      else if (i < left.length) {
-        array[k] = left[i++];
-      }
-      else {
-        array[k] = right[j++];
+      } else if (leftIndex < left.length) {
+        array[index] = left[leftIndex++];
+      } else {
+        array[index] = right[rightIndex++];
       }
     }
   }
 
   protected Object[] split(T[] array) {
-    int n = array.length;
+    int length = array.length;
 
-    T[] left = Arrays.copyOfRange(array, 0, n / 2);
-    T[] right = Arrays.copyOfRange(array, n / 2, n);
+    T[] left = Arrays.copyOfRange(array, 0, length / 2);
+    T[] right = Arrays.copyOfRange(array, length / 2, length);
 
     return new Object[] { left, right };
   }
