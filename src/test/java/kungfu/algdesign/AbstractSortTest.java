@@ -23,37 +23,37 @@ import java.util.Arrays;
 import org.junit.Assert;
 import org.junit.Test;
 
-import kungfu.algdesign.msort.MergeSort;
+import kungfu.algdesign.sort.Sort;
 
 /**
  * @author lcsontos
  */
-public abstract class AbstractMergeSortTest {
+public abstract class AbstractSortTest {
 
   @Test(expected = NullPointerException.class)
   public void testSortNull() {
-    getMergeSort().sort(null);
+    getSort().sort(null);
   }
 
   @Test
   public void testSortEmpty() {
-    MergeSort mergeSort = getMergeSort();
+    Sort<Integer> sort = getSort();
 
-    mergeSort.sort(EMPTY_ARRAY);
+    sort.sort(EMPTY_ARRAY);
   }
 
   @Test
   public void testSortSmallInput() {
-    MergeSort mergeSort = getMergeSort();
+    Sort<Integer> sort = getSort();
 
     Integer[] arr = Arrays.copyOf(UNSORTED_ARRAY, UNSORTED_ARRAY.length);
 
-    mergeSort.sort(arr);
+    sort.sort(arr);
 
     Assert.assertArrayEquals(SORTED_ARRAY, arr);
   }
 
-  protected abstract MergeSort getMergeSort();
+  protected abstract Sort<Integer> getSort();
 
   private static final Integer[] EMPTY_ARRAY = new Integer[0];
 

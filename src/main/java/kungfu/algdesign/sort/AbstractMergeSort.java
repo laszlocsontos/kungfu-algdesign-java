@@ -16,41 +16,18 @@
  * 
  */
 
-package kungfu.algdesign.msort;
+package kungfu.algdesign.sort;
 
 import java.util.Arrays;
 
 /**
  * @author lcsontos
+ *
+ * @param <T> Type of elements
  */
-public class MergeSortImpl implements MergeSort {
+public abstract class AbstractMergeSort<T extends Comparable<T>> extends AbstractSort<T> {
 
-  @Override
-  public <T extends Comparable<T>> void sort(T[] array) {
-    if (array == null) {
-      throw new NullPointerException("array cannot be null.");
-    }
-
-    mergeSort(array);
-  }
-
-  protected <T extends Comparable<T>> void mergeSort(T[] array) {
-    if (array.length < 2) {
-      return;
-    }
-
-    int n = array.length;
-
-    T[] left = Arrays.copyOfRange(array, 0, n / 2);
-    T[] right = Arrays.copyOfRange(array, n / 2, n);
-
-    mergeSort(left);
-    mergeSort(right);
-
-    merge(left, right, array);
-  }
-
-  protected <T extends Comparable<T>> void merge(T[] left, T[] right, T[] array) {
+  protected void merge(T[] left, T[] right, T[] array) {
     int i = 0, j = 0;
 
     while (i < left.length || j < right.length) {
@@ -73,16 +50,13 @@ public class MergeSortImpl implements MergeSort {
     }
   }
 
-  protected <T extends Comparable<T>> boolean isLessThenOrEquals(T left, T right) {
-    if (left == null) {
-      return true;
-    }
+  protected Object[] split(T[] array) {
+    int n = array.length;
 
-    if (right == null) {
-      return false;
-    }
+    T[] left = Arrays.copyOfRange(array, 0, n / 2);
+    T[] right = Arrays.copyOfRange(array, n / 2, n);
 
-    return left.compareTo(right) <= 0;
+    return new Object[] { left, right };
   }
 
 }

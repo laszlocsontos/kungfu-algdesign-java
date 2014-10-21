@@ -16,13 +16,25 @@
  * 
  */
 
-package kungfu.algdesign.msort;
+package kungfu.algdesign.sort;
 
 /**
  * @author lcsontos
+ *
+ * @param <T> Type of elements
  */
-public interface MergeSort {
+public abstract class AbstractSort<T extends Comparable<T>> implements Sort<T> {
 
-  public <T extends Comparable<T>> void sort(T[] array);
+  protected boolean isLessThenOrEquals(T left, T right) {
+    if (left == null) {
+      return true;
+    }
+
+    if (right == null) {
+      return false;
+    }
+
+    return left.compareTo(right) <= 0;
+  }
 
 }

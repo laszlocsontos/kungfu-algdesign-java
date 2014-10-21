@@ -16,19 +16,15 @@
  * 
  */
 
-package kungfu.algdesign;
-
-import kungfu.algdesign.sort.Sort;
-import kungfu.algdesign.sort.MergeSortImpl;
+package kungfu.algdesign.sort;
 
 /**
  * @author lcsontos
+ *
+ * @param <T> Type of elements
  */
-public class MergeSortImplTest extends AbstractSortTest {
+public interface Sort<T extends Comparable<T>> {
 
-  @Override
-  protected Sort<Integer> getSort() {
-    return new MergeSortImpl<Integer>();
-  }
+  public void sort(T[] array);
 
 }

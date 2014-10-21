@@ -16,19 +16,41 @@
  * 
  */
 
-package kungfu.algdesign;
-
-import kungfu.algdesign.sort.Sort;
-import kungfu.algdesign.sort.MergeSortImpl;
+package kungfu.algdesign.sort;
 
 /**
+ * 
  * @author lcsontos
+ *
+ * @param <T> Type of elements
  */
-public class MergeSortImplTest extends AbstractSortTest {
+public class MergeSortImpl<T extends Comparable<T>> extends AbstractMergeSort<T> {
 
   @Override
-  protected Sort<Integer> getSort() {
-    return new MergeSortImpl<Integer>();
+  public void sort(T[] array) {
+    if (array == null) {
+      throw new NullPointerException("array cannot be null.");
+    }
+
+    splitAndMerge(array);
   }
+
+  @SuppressWarnings("unchecked")
+  protected void splitAndMerge(T[] array) {
+    if (array.length < 2) {
+      return;
+    }
+
+    Object[] arrays = split(array);
+
+    T[] left = (T[]) arrays[0];
+    T[] right = (T[]) arrays[1];
+
+    splitAndMerge(left);
+    splitAndMerge(right);
+
+    merge(left, right, array);
+  }
+
 
 }
