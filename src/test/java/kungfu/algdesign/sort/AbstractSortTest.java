@@ -16,7 +16,7 @@
  * 
  */
 
-package kungfu.algdesign;
+package kungfu.algdesign.sort;
 
 import java.util.Arrays;
 
@@ -29,6 +29,19 @@ import kungfu.algdesign.sort.Sort;
  * @author lcsontos
  */
 public abstract class AbstractSortTest {
+
+  @Test
+  public void testIsLessThenOrEquals() {
+    AbstractSort<Integer> sort = (AbstractSort<Integer>)getSort();
+
+    Assert.assertFalse(sort.isLessThenOrEquals(1, null));
+    Assert.assertFalse(sort.isLessThenOrEquals(2, 1));
+
+    Assert.assertTrue(sort.isLessThenOrEquals(1, 1));
+    Assert.assertTrue(sort.isLessThenOrEquals(1, 2));
+    Assert.assertTrue(sort.isLessThenOrEquals(null, 1));
+    Assert.assertTrue(sort.isLessThenOrEquals(null, 2));
+  }
 
   @Test(expected = NullPointerException.class)
   public void testSortNull() {

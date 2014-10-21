@@ -16,7 +16,7 @@
  * 
  */
 
-package kungfu.algdesign;
+package kungfu.algdesign.sort;
 
 import kungfu.algdesign.sort.Sort;
 import kungfu.algdesign.sort.MergeSortImpl;
@@ -24,7 +24,7 @@ import kungfu.algdesign.sort.MergeSortImpl;
 /**
  * @author lcsontos
  */
-public class MergeSortImplTest extends AbstractSortTest {
+public class MergeSortImplTest extends AbstractMergeSortTest {
 
   @Override
   protected Sort<Integer> getSort() {
