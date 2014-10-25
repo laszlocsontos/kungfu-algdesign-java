@@ -18,10 +18,12 @@
 
 package kungfu.algdesign.inv;
 
+import kungfu.algdesign.sort.MergeSortImpl;
+
 /**
  * @author lcsontos
  */
-public class InversionImpl implements Inversion {
+public class InversionImpl extends MergeSortImpl<Integer> implements Inversion {
 
   @Override
   public int countInversions(int[] arr) {

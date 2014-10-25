@@ -27,7 +27,8 @@ import java.util.Arrays;
  */
 public abstract class AbstractMergeSort<T extends Comparable<T>> extends AbstractSort<T> {
 
-  protected void merge(T[] left, T[] right, T[] array) {
+  protected int merge(T[] left, T[] right, T[] array) {
+    int invCount = 0;
     int leftIndex = 0;
     int rightIndex = 0;
 
@@ -39,6 +40,8 @@ public abstract class AbstractMergeSort<T extends Comparable<T>> extends Abstrac
           array[index] = left[leftIndex++];
         } else {
           array[index] = right[rightIndex++];
+
+          invCount += (left.length - leftIndex);
         }
       } else if (leftIndex < left.length) {
         array[index] = left[leftIndex++];
@@ -46,6 +49,8 @@ public abstract class AbstractMergeSort<T extends Comparable<T>> extends Abstrac
         array[index] = right[rightIndex++];
       }
     }
+
+    return invCount;
   }
 
   protected Object[] split(T[] array) {
