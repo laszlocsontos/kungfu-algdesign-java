@@ -56,6 +56,8 @@ public class MergeSortImpl<T extends Comparable<T>> extends AbstractMergeSort<T>
 
     splitInvCount = merge(left, right, array);
 
+    // System.out.println(leftInvCount + " " + rightInvCount + " " + splitInvCount);
+
     return (leftInvCount + rightInvCount + splitInvCount);
   }
 

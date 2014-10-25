@@ -25,6 +25,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.common.primitives.Ints;
+
 /**
  * @author lcsontos
  */
@@ -37,6 +39,22 @@ public class Utils {
     ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 
     return classLoader.getResourceAsStream(name);
+  }
+
+  public static int[] getIntArray(InputStream inputStream) throws IOException {
+    InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+
+    BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+    List<Integer> integerList = new ArrayList<>();
+
+    String line = null;
+
+    while ((line = bufferedReader.readLine()) != null) {
+      integerList.add(Integer.valueOf(line));
+    }
+
+    return Ints.toArray(integerList);
   }
 
   public static Integer[] getIntegerArray(InputStream inputStream) throws IOException {
