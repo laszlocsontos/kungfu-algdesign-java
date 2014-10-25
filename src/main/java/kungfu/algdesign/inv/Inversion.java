@@ -28,6 +28,6 @@ public interface Inversion {
    * @param arr Input array
    * @return Number of inversions
    */
-  int countInversions(int[] arr);
+  long countInversions(int[] arr);
 
 }

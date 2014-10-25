@@ -32,6 +32,6 @@ public interface Sort<T extends Comparable<T>> {
    * @return returns the inversion count of the given array, that is, the number of element pairs
    *         which were in wrong order and had to be swapped.
    */
-  public int sort(T[] array);
+  public long sort(T[] array);
 
 }

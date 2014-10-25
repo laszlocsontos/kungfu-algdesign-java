@@ -27,8 +27,9 @@ import java.util.Arrays;
  */
 public abstract class AbstractMergeSort<T extends Comparable<T>> extends AbstractSort<T> {
 
-  protected int merge(T[] left, T[] right, T[] array) {
-    int invCount = 0;
+  protected long merge(T[] left, T[] right, T[] array) {
+    long  invCount = 0;
+
     int leftIndex = 0;
     int rightIndex = 0;
 

@@ -30,12 +30,12 @@ import kungfu.algdesign.sort.MergeSortImpl;
 public class InversionImpl extends MergeSortImpl<Integer> implements Inversion {
 
   @Override
-  public int countInversions(int[] arr) {
+  public long countInversions(int[] arr) {
     List<Integer> ints = Ints.asList(arr);
 
     Integer[] integerArray = new Integer[arr.length];
 
-    int invCount = sort(ints.toArray(integerArray));
+    long invCount = sort(ints.toArray(integerArray));
 
     return invCount;
   }

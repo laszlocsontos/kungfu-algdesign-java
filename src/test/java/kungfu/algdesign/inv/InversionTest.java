@@ -55,9 +55,10 @@ public class InversionTest {
 
     int[] arr = Utils.getIntArray(inputStream);
 
-    int invCount = inversion.countInversions(arr);
+    long invCount = inversion.countInversions(arr);
 
     Assert.assertTrue(invCount >= 0);
+    Assert.assertEquals(2407905288L, invCount);
   }
 
   private static final String UNSORTED_INPUT_NAME = "IntegerArray.gz";

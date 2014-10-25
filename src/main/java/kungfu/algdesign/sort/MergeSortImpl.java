@@ -27,7 +27,7 @@ package kungfu.algdesign.sort;
 public class MergeSortImpl<T extends Comparable<T>> extends AbstractMergeSort<T> {
 
   @Override
-  public int sort(T[] array) {
+  public long sort(T[] array) {
     if (array == null) {
       throw new NullPointerException("array cannot be null.");
     }
@@ -36,7 +36,7 @@ public class MergeSortImpl<T extends Comparable<T>> extends AbstractMergeSort<T>
   }
 
   @SuppressWarnings("unchecked")
-  protected int splitAndMerge(T[] array) {
+  protected long splitAndMerge(T[] array) {
     if (array.length < 2) {
       return 0;
     }
@@ -46,15 +46,10 @@ public class MergeSortImpl<T extends Comparable<T>> extends AbstractMergeSort<T>
     T[] left = (T[]) arrays[0];
     T[] right = (T[]) arrays[1];
 
-    int leftInvCount = 0;
-    int rightInvCount = 0;
+    long leftInvCount = splitAndMerge(left);
+    long rightInvCount = splitAndMerge(right);
 
-    leftInvCount = splitAndMerge(left);
-    rightInvCount = splitAndMerge(right);
-
-    int splitInvCount = 0;
-
-    splitInvCount = merge(left, right, array);
+    long splitInvCount = merge(left, right, array);
 
     // System.out.println(leftInvCount + " " + rightInvCount + " " + splitInvCount);
 
