@@ -18,6 +18,10 @@
 
 package kungfu.algdesign.inv;
 
+import java.util.List;
+
+import com.google.common.primitives.Ints;
+
 import kungfu.algdesign.sort.MergeSortImpl;
 
 /**
@@ -27,8 +31,13 @@ public class InversionImpl extends MergeSortImpl<Integer> implements Inversion {
 
   @Override
   public int countInversions(int[] arr) {
-    // TODO Auto-generated method stub
-    return 0;
+    List<Integer> ints = Ints.asList(arr);
+
+    Integer[] integerArray = new Integer[arr.length];
+
+    int invCount = sort(ints.toArray(integerArray));
+
+    return invCount;
   }
 
 }

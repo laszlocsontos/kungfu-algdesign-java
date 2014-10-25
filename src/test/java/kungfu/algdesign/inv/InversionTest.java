@@ -45,6 +45,5 @@ public class InversionTest {
     
   }
 
-  private Inversion inversion;
-
+  private final Inversion inversion = new InversionImpl();
 }
