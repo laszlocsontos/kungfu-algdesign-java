@@ -88,7 +88,7 @@ public abstract class AbstractSortTest {
 
   private static final Integer[] EMPTY_ARRAY = new Integer[0];
 
-  private static final String UNSORTED_INPUT_NAME = "IntegerArray.gz";
+  private static final String UNSORTED_INPUT_NAME = "IntegerArray.txt.gz";
 
   private static final Integer[] UNSORTED_SMALL_ARRAY = {
     3, 1, 7, 8, 3, 3, 5, 9, 100, 4, 2, 8, 1, 3, null, 1 ,6 ,7, 1, 6, 2, 345, 44, 333, 4234234, 2342

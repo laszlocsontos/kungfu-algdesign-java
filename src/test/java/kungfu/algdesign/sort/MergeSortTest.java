@@ -24,7 +24,7 @@ import kungfu.algdesign.sort.MergeSortImpl;
 /**
  * @author lcsontos
  */
-public class MergeSortImplTest extends AbstractMergeSortTest {
+public class MergeSortTest extends AbstractMergeSortTest {
 
   @Override
   protected Sort<Integer> getSort() {
