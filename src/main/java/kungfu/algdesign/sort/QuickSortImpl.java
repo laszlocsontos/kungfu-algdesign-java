@@ -20,6 +20,12 @@ package kungfu.algdesign.sort;
 
 public class QuickSortImpl<T extends Comparable<T>> extends AbstractQuickSort<T> {
 
+  /**
+   * Sorts the given array in ascendent order.
+   * 
+   * @param array Input array
+   * @return returns the sum of the length of the recursively processed sub-arrays.
+   */
   @Override
   public long sort(T[] array) {
     if (array == null) {
