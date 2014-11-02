@@ -52,6 +52,23 @@ public class QuickSortTest extends AbstractQuickSortTest {
   }
 
   @Test
+  public void testWithSelectMedianAsPivot() {
+    QuickSortImpl<Integer> sort = new QuickSortImpl<Integer>(
+      PivotSelectionStrategy.MEDIAN_OF_THREE);
+
+    Integer[] arr = new Integer[] { 8, 2, 4, 5, 7, 1 };
+
+    int pivotIndex = sort.choosePivot(arr, 0, arr.length - 1);
+
+    Assert.assertEquals(2, pivotIndex);
+
+    long compCount = calculateCompCount(PivotSelectionStrategy.MEDIAN_OF_THREE);
+
+    Assert.assertEquals(159894, compCount);
+    // System.out.println(compCount);
+  }
+
+  @Test
   public void testWithSelectLastAsPivot() {
     long compCount = calculateCompCount(PivotSelectionStrategy.LAST);
 

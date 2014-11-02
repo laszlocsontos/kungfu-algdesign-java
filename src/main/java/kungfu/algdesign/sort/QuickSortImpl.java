@@ -67,6 +67,39 @@ public class QuickSortImpl<T extends Comparable<T>> extends AbstractQuickSort<T>
     switch (pivotSelectionStrategy) {
       case FIRST:
         return leftIndex;
+      case MEDIAN_OF_THREE:
+        int length = rightIndex - leftIndex + 1;
+
+        int middleIndex = (length - 1) / 2;
+
+        T leftElement = array[leftIndex];
+        T middleElement = array[middleIndex];
+        T rightElement = array[rightIndex];
+
+        if ((isLessThenOrEquals(middleElement, leftElement)
+            && isLessThenOrEquals(leftElement, rightElement))
+            || (isLessThenOrEquals(rightElement, leftElement)
+            && isLessThenOrEquals(leftElement, middleElement))) {
+
+          return leftIndex;
+        }
+
+        if ((isLessThenOrEquals(leftElement, middleElement)
+            && isLessThenOrEquals(middleElement, rightElement))
+            || (isLessThenOrEquals(rightElement, middleElement)
+            && isLessThenOrEquals(middleElement, leftElement))) {
+
+          return middleIndex;
+        }
+
+        if ((isLessThenOrEquals(leftElement, rightElement)
+            && isLessThenOrEquals(rightElement, middleElement))
+            || (isLessThenOrEquals(middleElement, rightElement)
+            && isLessThenOrEquals(rightElement, leftElement))) {
+
+          return rightIndex;
+        }
+
       case LAST:
         return rightIndex;
       default:
