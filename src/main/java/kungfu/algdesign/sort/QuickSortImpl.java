@@ -20,6 +20,14 @@ package kungfu.algdesign.sort;
 
 public class QuickSortImpl<T extends Comparable<T>> extends AbstractQuickSort<T> {
 
+  public QuickSortImpl() {
+    this(PivotSelectionStrategy.FIRST);
+  }
+
+  public QuickSortImpl(PivotSelectionStrategy pivotSelectionStrategy) {
+    this.pivotSelectionStrategy = pivotSelectionStrategy;
+  }
+
   /**
    * Sorts the given array in ascendent order.
    * 
@@ -56,8 +64,15 @@ public class QuickSortImpl<T extends Comparable<T>> extends AbstractQuickSort<T>
 
   @Override
   protected int choosePivot(T[] array, int leftIndex, int rightIndex) {
-    // Naive implementation
-    return leftIndex;
+    switch (pivotSelectionStrategy) {
+      case FIRST:
+        return leftIndex;
+      case LAST:
+        return rightIndex;
+      default:
+        throw new UnsupportedOperationException(
+          "Unimplemented strategy: " + pivotSelectionStrategy);
+    }
   }
 
   protected void quickSort(T[] array, int leftIndex, int rightIndex, long[] compCount) {
@@ -72,6 +87,8 @@ public class QuickSortImpl<T extends Comparable<T>> extends AbstractQuickSort<T>
       return;
     }
 
+    compCount[0] += subLength - 1;
+
     int pivotIndex = choosePivot(array, leftIndex, rightIndex);
 
     checkBounds("privotIndex", pivotIndex, leftIndex, rightIndex);
@@ -80,15 +97,13 @@ public class QuickSortImpl<T extends Comparable<T>> extends AbstractQuickSort<T>
 
     if (pivotFinalIndex > leftIndex) {
       quickSort(array, leftIndex, pivotFinalIndex - 1, compCount);
-
-      compCount[0] += pivotFinalIndex - leftIndex - 1;
     }
 
     if (pivotFinalIndex < rightIndex) {
       quickSort(array, pivotFinalIndex + 1, rightIndex, compCount);
-
-      compCount[0] += rightIndex - pivotFinalIndex - 1;
     }
   }
+
+  private final PivotSelectionStrategy pivotSelectionStrategy;
 
 }

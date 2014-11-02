@@ -18,6 +18,17 @@
 
 package kungfu.algdesign.sort;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Arrays;
+import java.util.zip.GZIPInputStream;
+
+import kungfu.algdesign.util.Utils;
+
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
 /**
  * 
  * @author lcsontos
@@ -25,9 +36,43 @@ package kungfu.algdesign.sort;
  */
 public class QuickSortTest extends AbstractQuickSortTest {
 
+  @BeforeClass
+  public static void setUpClass() throws IOException {
+    InputStream inputStream = new GZIPInputStream(
+      Utils.getInputStreamForResource(UNSORTED_INPUT_NAME));
+
+    testArray = Utils.getIntegerArray(inputStream);
+  }
+
+  @Test
+  public void testWithSelectFirstAsPivot() {
+    long compCount = calculateCompCount(PivotSelectionStrategy.FIRST);
+
+    Assert.assertEquals(162085, compCount);
+  }
+
+  @Test
+  public void testWithSelectLastAsPivot() {
+    long compCount = calculateCompCount(PivotSelectionStrategy.LAST);
+
+    Assert.assertEquals(164123, compCount);
+  }
+
+  protected long calculateCompCount(PivotSelectionStrategy pivotSelectionStrategy) {
+    Sort<Integer> sort = new QuickSortImpl<Integer>(pivotSelectionStrategy);
+
+    Integer[] arr = Arrays.copyOf(testArray, testArray.length);
+
+    return sort.sort(arr);
+  }
+
   @Override
   protected Sort<Integer> getSort() {
     return new QuickSortImpl<Integer>();
   }
+
+  private static final String UNSORTED_INPUT_NAME = "QuickSort.txt.gz";
+
+  private static Integer[] testArray;
 
 }
