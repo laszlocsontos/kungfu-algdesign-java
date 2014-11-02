@@ -25,13 +25,9 @@ package kungfu.algdesign.sort;
  */
 public abstract class AbstractQuickSort<T extends Comparable<T>> extends AbstractSort<T> {
 
-  protected void partition(T[] array, int pivotIndex, int leftIndex, int rightIndex) {
-    int length = array.length;
+  protected abstract int choosePivot(T[] array, int leftIndex, int rightIndex);
 
-    checkBounds("leftIndex", leftIndex, 0, length - 1);
-    checkBounds("rightIndex", rightIndex, 0, length - 1);
-    checkBounds("privotIndex", pivotIndex, leftIndex, rightIndex);
-
+  protected int partition(T[] array, int pivotIndex, int leftIndex, int rightIndex) {
     swap(array, leftIndex, pivotIndex);
 
     T pivot = array[leftIndex];
@@ -39,26 +35,25 @@ public abstract class AbstractQuickSort<T extends Comparable<T>> extends Abstrac
     int splitIndex = leftIndex + 1;
 
     for (int currentIndex = splitIndex ; currentIndex <= rightIndex; currentIndex++) {
-      if (isLessThenOrEquals(pivot, array[currentIndex])) {
-        continue;
+      T currentElement = array[currentIndex];
+
+      if (isLessThenOrEquals(currentElement, pivot)) {
+        swap(array, currentIndex, splitIndex++);
       }
-
-      swap(array, currentIndex, splitIndex++);
     }
 
-    swap(array, leftIndex, splitIndex - 1);
-  }
+    pivotIndex = splitIndex - 1;
 
-  private void checkBounds(String name, int index, int min, int max) {
-    if (index >= min && index <= max) {
-      return;
-    }
+    swap(array, leftIndex, pivotIndex);
 
-    throw new ArrayIndexOutOfBoundsException(
-      "name=" + index + "exceeds the array's bounds: min=" + min + ", max=" + max);
+    return pivotIndex;
   }
 
   private void swap(T[] array, int index1, int index2) {
+    if (index1 == index2) {
+      return;
+    }
+
     T tmp = array[index1];
 
     array[index1] = array[index2];
