@@ -26,6 +26,13 @@ package kungfu.algdesign.sort;
  */
 public class MergeSortImpl<T extends Comparable<T>> extends AbstractMergeSort<T> {
 
+  /**
+   * Sorts the given array in ascendent order.
+   * 
+   * @param array Input array
+   * @return returns the inversion count of the given array, that is, the number of element pairs
+   *         which were in wrong order and had to be swapped.
+   */
   @Override
   public long sort(T[] array) {
     if (array == null) {

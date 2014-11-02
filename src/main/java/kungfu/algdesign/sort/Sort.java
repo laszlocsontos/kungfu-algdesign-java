@@ -29,8 +29,8 @@ public interface Sort<T extends Comparable<T>> {
    * Sorts the given array in ascendent order.
    * 
    * @param array Input array
-   * @return returns the inversion count of the given array, that is, the number of element pairs
-   *         which were in wrong order and had to be swapped.
+   * @return returns an additional value internal to the underlying sort implementation or -1 if not
+   *         implemented.
    */
   public long sort(T[] array);
 
