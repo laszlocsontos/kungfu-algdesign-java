@@ -35,6 +35,10 @@ public final class DFS {
   }
 
   public static Deque<Vertex> searchIterative(Graph graph, Vertex vertex) {
+    return searchIterative(graph, vertex, false);
+  }
+
+  public static Deque<Vertex> searchIterative(Graph graph, Vertex vertex, boolean reverse) {
     Deque<Vertex> traversedVertices = new LinkedList<Vertex>();
 
     Deque<Vertex> stack = new LinkedList<Vertex>();
@@ -46,12 +50,24 @@ public final class DFS {
     while (!stack.isEmpty()) {
       Vertex currentVertex = stack.peek();
 
+      Iterator<Edge> edgeIterator = null;
+
+      if (reverse) {
+        edgeIterator = currentVertex.incomingEdgesIterator();
+      } else {
+        edgeIterator = currentVertex.outgoingEdgesIterator();
+      }
+
       Vertex unvisitedAdjacentVertex = null;
 
-      for (Iterator<Edge> iterator = currentVertex.outgoingEdgesIterator(); iterator.hasNext();) {
-        Edge edge = iterator.next();
+      while (edgeIterator.hasNext()) {
+        Edge edge = edgeIterator.next();
 
-        unvisitedAdjacentVertex = edge.getHead();
+        if (reverse) {
+          unvisitedAdjacentVertex = edge.getTail();
+        } else {
+          unvisitedAdjacentVertex = edge.getHead();
+        }
 
         if (!graph.isVisited(unvisitedAdjacentVertex)) {
           break;
