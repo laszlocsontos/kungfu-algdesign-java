@@ -1,0 +1,43 @@
+/*
+ * Copyright (C) 2014 - present, Laszlo Csontos
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * 
+ */
+
+package kungfu.algdesign.graph;
+
+import java.io.InputStream;
+import java.util.zip.GZIPInputStream;
+
+import org.junit.Test;
+
+import kungfu.algdesign.util.Utils;
+
+/**
+ * @author lcsontos
+ */
+public class GraphTest {
+
+  @Test
+  public void testLoad() throws Exception {
+    InputStream inputStream = new GZIPInputStream(
+      Utils.getInputStreamForResource(GRAPH_INPUT_NAME));
+
+    Graph.load(inputStream);
+  }
+
+  private static final String GRAPH_INPUT_NAME = "SCC.txt.gz";
+
+}
