@@ -33,28 +33,72 @@ public final class DFS {
   private DFS() {
   }
 
-  public static Deque<Vertex> search(Graph graph, Vertex vertex) {
+  public static Deque<Vertex> searchIterative(Graph graph, Vertex vertex) {
     Deque<Vertex> traversedVertices = new LinkedList<Vertex>();
 
     Deque<Vertex> stack = new LinkedList<Vertex>();
 
-    stack.add(vertex);
+    stack.push(vertex);
+
+    vertex.visit();
 
     while (!stack.isEmpty()) {
-      vertex = stack.pop();
+      Vertex currentVertex = stack.peek();
 
-      if (!vertex.isVisited()) {
-        vertex.visit();
+      Vertex unvisitedAdjacentVertex = null;
 
-        for (Edge edge : vertex.getOutgoingEdges()) {
-          stack.push(edge.getHead());
+      for (Edge edge : currentVertex.getOutgoingEdges()) {
+        unvisitedAdjacentVertex = edge.getHead();
+
+        if (!unvisitedAdjacentVertex.isVisited()) {
+          break;
+        } else {
+          unvisitedAdjacentVertex = null;
         }
+      }
 
-        traversedVertices.add(vertex);
+      // currentVertex has no unvisited adjacent vertices
+      if (unvisitedAdjacentVertex == null) {
+        stack.pop();
+
+        // done with currentVertex
+        traversedVertices.push(currentVertex);
+      } else {
+        unvisitedAdjacentVertex.visit();
+
+        stack.push(unvisitedAdjacentVertex);
       }
     }
 
+    graph.reset();
+
     return traversedVertices;
+  }
+
+  public static Deque<Vertex> searchRecursive(Graph graph, Vertex vertex) {
+    Deque<Vertex> traversedVertices = new LinkedList<Vertex>();
+
+    doSearchRecursive(graph, vertex, traversedVertices);
+
+    graph.reset();
+
+    return traversedVertices;
+  }
+
+  private static void doSearchRecursive(
+    Graph graph, Vertex vertex, Deque<Vertex> traversedVertices) {
+
+    vertex.visit();
+
+    for (Edge edge : vertex.getOutgoingEdges()) {
+      Vertex head = edge.getHead();
+
+      if (!head.isVisited()) {
+        doSearchRecursive(graph, head, traversedVertices);
+      }
+    }
+
+    traversedVertices.push(vertex);
   }
 
 }
