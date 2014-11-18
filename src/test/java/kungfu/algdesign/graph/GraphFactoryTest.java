@@ -18,6 +18,7 @@
 
 package kungfu.algdesign.graph;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.zip.GZIPInputStream;
 
@@ -30,12 +31,16 @@ import kungfu.algdesign.util.Utils;
  */
 public class GraphFactoryTest {
 
-  @Test
-  public void testLoad() throws Exception {
+  public static Graph loadLargeGraph() throws InvalidGraphException, IOException {
     InputStream inputStream = new GZIPInputStream(
       Utils.getInputStreamForResource(GRAPH_INPUT_NAME));
 
-    GraphFactory.loadGraph(inputStream);
+    return GraphFactory.loadGraph(inputStream);
+  }
+
+  @Test
+  public void testLoad() throws Exception {
+    loadLargeGraph();
   }
 
   private static final String GRAPH_INPUT_NAME = "SCC.txt.gz";

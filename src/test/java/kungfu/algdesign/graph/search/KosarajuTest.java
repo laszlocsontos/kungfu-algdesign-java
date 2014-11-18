@@ -26,6 +26,7 @@ import org.junit.Test;
 import com.google.common.collect.Lists;
 
 import kungfu.algdesign.graph.Graph;
+import kungfu.algdesign.graph.GraphFactoryTest;
 import kungfu.algdesign.graph.MockGraph;
 import kungfu.algdesign.graph.Vertex;
 
@@ -34,9 +35,18 @@ import kungfu.algdesign.graph.Vertex;
  */
 public class KosarajuTest {
 
+  @Test
+  public void testFindSCCsLargeInput() throws Exception {
+    Graph graph = GraphFactoryTest.loadLargeGraph();
+
+    Collection<Graph> sccs = Kosaraju.findSCCs(graph);
+
+    System.out.println(sccs.size());
+  }
+
   @SuppressWarnings("unchecked")
   @Test
-  public void testFindSCCs() {
+  public void testFindSCCsSmallInput() {
     Graph graph = new MockGraph();
 
     Collection<Graph> actualSCCs = Kosaraju.findSCCs(graph);
