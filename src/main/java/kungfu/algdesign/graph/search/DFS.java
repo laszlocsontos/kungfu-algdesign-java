@@ -18,6 +18,7 @@
 
 package kungfu.algdesign.graph.search;
 
+import java.util.Collection;
 import java.util.Deque;
 import java.util.LinkedList;
 
@@ -34,6 +35,10 @@ public final class DFS {
   }
 
   public static Deque<Vertex> searchIterative(Graph graph, Vertex vertex) {
+    return searchIterative(graph, vertex, false);
+  }
+
+  public static Deque<Vertex> searchIterative(Graph graph, Vertex vertex, boolean reverse) {
     Deque<Vertex> traversedVertices = new LinkedList<Vertex>();
 
     Deque<Vertex> stack = new LinkedList<Vertex>();
@@ -45,10 +50,22 @@ public final class DFS {
     while (!stack.isEmpty()) {
       Vertex currentVertex = stack.peek();
 
+      Collection<Edge> edges = null;
+
+      if (reverse) {
+        edges = currentVertex.getIncomingEdges();
+      } else {
+        edges = currentVertex.getOutgoingEdges();
+      }
+
       Vertex unvisitedAdjacentVertex = null;
 
-      for (Edge edge : currentVertex.getOutgoingEdges()) {
-        unvisitedAdjacentVertex = edge.getHead();
+      for (Edge edge : edges) {
+        if (reverse) {
+          unvisitedAdjacentVertex = edge.getTail();
+        } else {
+          unvisitedAdjacentVertex = edge.getHead();
+        }
 
         if (!unvisitedAdjacentVertex.isVisited()) {
           break;
