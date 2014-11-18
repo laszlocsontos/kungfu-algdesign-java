@@ -87,7 +87,7 @@ public final class DFS {
       }
     }
 
-    graph.reset();
+    // graph.reset();
 
     return traversedVertices;
   }

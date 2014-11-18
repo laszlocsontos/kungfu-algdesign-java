@@ -54,6 +54,8 @@ public final class Kosaraju {
       visitedVertices.addAll(traversedVertices);
     }
 
+    graph.reset();
+
     while (!finishedVertices.isEmpty()) {
       Vertex vertex = finishedVertices.pop();
 
