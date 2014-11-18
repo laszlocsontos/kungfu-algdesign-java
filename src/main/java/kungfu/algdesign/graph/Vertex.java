@@ -19,7 +19,7 @@
 package kungfu.algdesign.graph;
 
 import java.util.Collection;
-import java.util.LinkedList;
+import java.util.LinkedHashSet;
 import java.util.Objects;
 
 import com.google.common.base.MoreObjects;
@@ -37,8 +37,8 @@ public class Vertex {
 
     this.name = name;
 
-    this.incomingEdges = new LinkedList<Edge>();
-    this.outgoingEdges = new LinkedList<Edge>();
+    this.incomingEdges = new LinkedHashSet<Edge>();
+    this.outgoingEdges = new LinkedHashSet<Edge>();
   }
 
   @Override

@@ -25,6 +25,7 @@ import java.io.InputStreamReader;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.MoreObjects.ToStringHelper;
@@ -68,6 +69,12 @@ public class Graph {
     vertices = new LinkedHashMap<>();
   }
 
+  public Graph(Set<Vertex> vertices) {
+    this();
+
+    addVertices(vertices);
+  }
+
   public Edge addEdge(Vertex head, Vertex tail) {
     Edge edge = new Edge(head, tail);
 
@@ -92,6 +99,12 @@ public class Graph {
     return vertex;
   }
 
+  public void addVertices(Set<Vertex> vertices) {
+    for (Vertex vertex : vertices) {
+      this.vertices.put(vertex.getName(), vertex);
+    }
+  }
+
   public Vertex addVertexIfNotExists(String name) {
     Vertex vertex = getVertex(name);
 
@@ -104,6 +117,46 @@ public class Graph {
 
   public Vertex getVertex(String name) {
     return vertices.get(name);
+  }
+
+  public Collection<Vertex> getVertices() {
+    return vertices.values();
+  }
+
+  public void removeVertex(String name) {
+    Vertex vertex = getVertex(name);
+
+    removeVertex(vertex);
+  }
+
+  public void removeVertex(Vertex vertex) {
+    Collection<Edge> incomingEdges = vertex.getIncomingEdges();
+
+    for (Edge edge : incomingEdges) {
+      Vertex tail = edge.getTail();
+
+      tail.getOutgoingEdges().remove(edge);
+    }
+
+    incomingEdges.clear();
+
+    Collection<Edge> outgoingEdges = vertex.getOutgoingEdges();
+
+    for (Edge edge : outgoingEdges) {
+      Vertex head = edge.getHead();
+
+      head.getIncomingEdges().remove(edge);
+    }
+
+    outgoingEdges.clear();
+
+    vertices.remove(vertex);
+  }
+
+  public void removeVertices(Set<Vertex> vertices) {
+    for (Vertex vertex : vertices) {
+      removeVertex(vertex);
+    }
   }
 
   public void reset() {
@@ -127,6 +180,10 @@ public class Graph {
     }
 
     return reverseGraph;
+  }
+
+  public int size() {
+    return vertices.size();
   }
 
   @Override
