@@ -39,23 +39,43 @@ public final class DFS {
 
     Deque<Vertex> stack = new LinkedList<Vertex>();
 
-    stack.add(vertex);
+    stack.push(vertex);
+
+    graph.visit(vertex);
 
     while (!stack.isEmpty()) {
-      vertex = stack.pop();
+      Vertex currentVertex = stack.peek();
 
-      if (graph.isVisited(vertex)) {
-        graph.visit(vertex);
+      Vertex unvisitedAdjacentVertex = null;
 
-        for (Iterator<Edge> iterator = vertex.outgoingEdgesIterator(); iterator.hasNext();) {
-          Edge edge = iterator.next();
+      for (Iterator<Edge> iterator = currentVertex.outgoingEdgesIterator(); iterator.hasNext();) {
+        Edge edge = iterator.next();
 
-          stack.push(edge.getHead());
+        unvisitedAdjacentVertex = edge.getHead();
+
+        if (!graph.isVisited(unvisitedAdjacentVertex)) {
+          break;
+        } else {
+          unvisitedAdjacentVertex = null;
         }
+      }
 
-        traversedVertices.add(vertex);
+      // currentVertex has no unvisited adjacent vertices
+
+      if (unvisitedAdjacentVertex == null) {
+        stack.pop();
+
+        // done with currentVertex
+
+        traversedVertices.push(currentVertex);
+      } else {
+        graph.visit(unvisitedAdjacentVertex);
+
+        stack.push(unvisitedAdjacentVertex);
       }
     }
+
+    graph.reset();
 
     return traversedVertices;
   }
@@ -65,7 +85,7 @@ public final class DFS {
 
     doSearchRecursive(graph, vertex, traversedVertices);
 
-    graph.reset();
+    // graph.reset();
 
     return traversedVertices;
   }
