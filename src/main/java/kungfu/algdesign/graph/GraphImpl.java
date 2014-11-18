@@ -20,8 +20,12 @@ package kungfu.algdesign.graph;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+
+import com.google.common.base.MoreObjects;
+import com.google.common.base.MoreObjects.ToStringHelper;
 
 /**
  * @author lcsontos
@@ -37,13 +41,8 @@ public class GraphImpl implements Graph {
   public Edge addEdge(String headName, String tailName) {
     Vertex head = addVertex(headName);
     Vertex tail = addVertex(tailName);
-
-    Edge edge = new Edge(head, tail);
-
-    head.addIncomingEdge(edge);
-    tail.addOutgoingEdge(edge);
-
-    return edge;
+  
+    return addEdge(head, tail);
   }
 
   @Override
@@ -64,6 +63,7 @@ public class GraphImpl implements Graph {
     return verticesMap.get(name);
   }
 
+  @Override
   public boolean isVisited(Vertex vertex) {
     checkVertex(vertex);
 
@@ -79,9 +79,30 @@ public class GraphImpl implements Graph {
   public Graph reverse() {
     Graph reverseGraph = new GraphImpl();
 
-    // TODO reverse
+    for (Vertex vertex : verticesMap.values()) {
+      for (Iterator<Edge> iterator = vertex.outgoingEdgesIterator(); iterator.hasNext();) {
+        Edge edge = iterator.next();
+
+        String headName = edge.getHead().getName();
+        String tailName = edge.getTail().getName();
+
+        reverseGraph.addEdge(tailName, headName);
+      }
+    }
 
     return reverseGraph;
+  }
+
+  @Override
+  public int size() {
+    return verticesMap.size();
+  }
+
+  @Override
+  public String toString() {
+    ToStringHelper helper = MoreObjects.toStringHelper(this).add("vertexCount", verticesMap.size());
+
+    return helper.toString();
   }
 
   @Override
@@ -89,6 +110,15 @@ public class GraphImpl implements Graph {
     checkVertex(vertex);
 
     visitedVerices.add(vertex);
+  }
+
+  private Edge addEdge(Vertex head, Vertex tail) {
+    Edge edge = new Edge(head, tail);
+
+    head.addIncomingEdge(edge);
+    tail.addOutgoingEdge(edge);
+
+    return edge;
   }
 
   private void checkVertex(Vertex vertex) {

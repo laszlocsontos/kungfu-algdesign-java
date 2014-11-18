@@ -29,9 +29,13 @@ public interface Graph {
 
   Vertex getVertex(String name);
 
+  boolean isVisited(Vertex vertex);
+
   void reset();
 
   Graph reverse();
+
+  int size();
 
   void visit(Vertex vertex);
 
