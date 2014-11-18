@@ -54,22 +54,21 @@ public final class Kosaraju {
       visitedVertices.addAll(traversedVertices);
     }
 
-    Graph reverseGraph = graph.reverse();
-
     while (!finishedVertices.isEmpty()) {
       Vertex vertex = finishedVertices.pop();
 
-      visitedVertices = new HashSet<Vertex>();
-
       String vertexName = vertex.getName();
+
+      Graph reverseGraph = graph.reverse();
 
       vertex = reverseGraph.getVertex(vertexName);
 
       Deque<Vertex> traversedVertices = DFS.searchIterative(reverseGraph, vertex);
 
-      visitedVertices.addAll(traversedVertices);
+      visitedVertices = new HashSet<Vertex>(traversedVertices);
 
-      reverseGraph.removeVertices(visitedVertices);
+      graph.removeVertices(visitedVertices);;
+      finishedVertices.removeAll(visitedVertices);
 
       Graph subGraph = new Graph(visitedVertices);
 
