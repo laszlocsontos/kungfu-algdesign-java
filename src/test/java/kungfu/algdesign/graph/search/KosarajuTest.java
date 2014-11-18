@@ -18,6 +18,7 @@
 
 package kungfu.algdesign.graph.search;
 
+import java.io.IOException;
 import java.util.Collection;
 
 import org.junit.Assert;
@@ -26,6 +27,8 @@ import org.junit.Test;
 import com.google.common.collect.Lists;
 
 import kungfu.algdesign.graph.Graph;
+import kungfu.algdesign.graph.GraphTest;
+import kungfu.algdesign.graph.InvalidGraphException;
 import kungfu.algdesign.graph.MockGraph;
 import kungfu.algdesign.graph.Vertex;
 
@@ -35,7 +38,16 @@ import kungfu.algdesign.graph.Vertex;
 public class KosarajuTest {
 
   @Test
-  public void testFindSCCs() {
+  public void testFindSCCsLargeInput() throws Exception {
+    Graph graph = GraphTest.loadLargeGraph();
+
+    Collection<Graph> sccs = Kosaraju.findSCCs(graph);
+
+    System.out.println(sccs.size());
+  }
+
+  @Test
+  public void testFindSCCsSmallInput() {
     Graph graph = new MockGraph();
 
     Collection<Graph> actualSCCs = Kosaraju.findSCCs(graph);
