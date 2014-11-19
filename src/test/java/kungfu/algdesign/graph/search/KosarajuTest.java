@@ -45,17 +45,7 @@ public class KosarajuTest {
 
     Collection<Graph> sccs = doTest(graph, null);
 
-    // Assert.assertEquals(167054, sccs.size());
-
-    int index = 0;
-
-    Iterator<Graph> iterator = sccs.iterator();
-
-    while (index++ < 5 && iterator.hasNext()) {
-      Graph scc = iterator.next();
-
-      System.out.println(scc.size());
-    }
+    Assert.assertEquals(371762, sccs.size());
   }
 
   @Test
@@ -92,9 +82,7 @@ public class KosarajuTest {
 
     graph = GraphTest.loadLargeGraph(GraphTest.SMALL_GRAPH_INPUT_NAME);
 
-    actualSCCs = doTest(graph, new int[] { 3, 2, 2, 2, 1 });
-
-    System.out.println(actualSCCs + " " + graph.size());
+    actualSCCs = doTest(graph, new int[] { 3, 2, 2, 2, 1, 1 });
   }
 
   private Collection<Graph> doTest(Graph graph, int[] expectedSCCsizes) {
@@ -113,37 +101,41 @@ public class KosarajuTest {
 
     Assert.assertEquals("Vertex count mismatch.", expectedSize, vertexCount);
 
-    if (expectedSCCsizes != null) {
-      Collections.sort(sccs, new Comparator<Graph>() {
-  
-        @Override
-        public int compare(Graph g1, Graph g2) {
-          int s1 = g1.size();
-          int s2 = g2.size();
-  
-          if (s1 == s2) {
-            return 0;
-          } else if (s1 < s2) {
-            return 1;
-          } else {
-            return -1;
-          }
+    Collections.sort(sccs, new Comparator<Graph>() {
+
+      @Override
+      public int compare(Graph g1, Graph g2) {
+        int s1 = g1.size();
+        int s2 = g2.size();
+
+        if (s1 == s2) {
+          return 0;
+        } else if (s1 < s2) {
+          return 1;
+        } else {
+          return -1;
         }
-  
-      });
-  
-      int[] actualSCCsizes = new int[sccs.size()];
-  
-      int index = 0;
-  
-      Iterator<Graph> iterator = sccs.iterator();
-  
-      while (iterator.hasNext()) {
-        Graph scc = iterator.next();
-  
-        actualSCCsizes[index++] = scc.size();
       }
-  
+
+    });
+
+    int[] actualSCCsizes = new int[sccs.size()];
+
+    int index = 0;
+
+    Iterator<Graph> iterator = sccs.iterator();
+
+    while (iterator.hasNext()) {
+      Graph scc = iterator.next();
+
+      if (index < 5) {
+        System.out.println(scc.size());
+      }
+
+      actualSCCsizes[index++] = scc.size();
+    }
+
+    if (expectedSCCsizes != null) {
       Assert.assertArrayEquals("Expected SCC sizes mismatch.", expectedSCCsizes, actualSCCsizes);
     }
 
