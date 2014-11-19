@@ -41,36 +41,38 @@ public final class Kosaraju {
     Collection<Graph> sccs = new LinkedList<Graph>();
 
     Deque<Vertex> finishedVertices = new LinkedList<Vertex>(); 
-    Set<Vertex> visitedVertices = new HashSet<Vertex>();
 
     Iterator<Vertex> verticesIterator = graph.verticesIterator();
 
     while (verticesIterator.hasNext()) {
       Vertex vertex = (Vertex) verticesIterator.next();
 
-      if (visitedVertices.contains(vertex)) {
+      if (graph.isVisited(vertex)) {
         continue;
       }
 
       Deque<Vertex> traversedVertices = DFS.searchIterative(graph, vertex);
 
       finishedVertices.addAll(traversedVertices);
-      visitedVertices.addAll(traversedVertices);
     }
 
     graph.reset();
 
+    Set<Vertex> removedVertices = new HashSet<Vertex>();
+
     while (!finishedVertices.isEmpty()) {
       Vertex vertex = finishedVertices.pop();
 
+      if (removedVertices.contains(vertex)) {
+        continue;
+      }
+
       Deque<Vertex> traversedVertices = DFS.searchIterative(graph, vertex, true);
 
-      visitedVertices = new HashSet<Vertex>(traversedVertices);
+      graph.removeVertices(traversedVertices);;
+      removedVertices.addAll(traversedVertices);
 
-      graph.removeVertices(visitedVertices);;
-      finishedVertices.removeAll(visitedVertices);
-
-      Graph subGraph = new GraphImpl(visitedVertices);
+      Graph subGraph = new GraphImpl(traversedVertices);
 
       sccs.add(subGraph);
     }
