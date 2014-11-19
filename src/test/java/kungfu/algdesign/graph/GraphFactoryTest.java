@@ -31,18 +31,19 @@ import kungfu.algdesign.util.Utils;
  */
 public class GraphFactoryTest {
 
-  public static Graph loadLargeGraph() throws InvalidGraphException, IOException {
-    InputStream inputStream = new GZIPInputStream(
-      Utils.getInputStreamForResource(GRAPH_INPUT_NAME));
+  public static Graph loadGraph(String inputName) throws InvalidGraphException, IOException {
+    InputStream inputStream = new GZIPInputStream(Utils.getInputStreamForResource(inputName));
 
     return GraphFactory.loadGraph(inputStream);
   }
 
   @Test
   public void testLoad() throws Exception {
-    loadLargeGraph();
+    loadGraph(LARGE_GRAPH_INPUT_NAME);
+    loadGraph(LARGE_GRAPH_INPUT_NAME);
   }
 
-  private static final String GRAPH_INPUT_NAME = "SCC.txt.gz";
+  public static final String LARGE_GRAPH_INPUT_NAME = "SCC_large.txt.gz";
+  public static final String SMALL_GRAPH_INPUT_NAME = "SCC_small.txt.gz";
 
 }
