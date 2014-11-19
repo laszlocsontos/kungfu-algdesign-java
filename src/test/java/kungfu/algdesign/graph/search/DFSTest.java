@@ -21,7 +21,7 @@ package kungfu.algdesign.graph.search;
 import java.util.Deque;
 
 import kungfu.algdesign.graph.Graph;
-import kungfu.algdesign.graph.GraphImpl;
+import kungfu.algdesign.graph.GraphFactoryTest;
 import kungfu.algdesign.graph.MockGraph;
 import kungfu.algdesign.graph.Vertex;
 
@@ -34,16 +34,10 @@ import org.junit.Test;
 public class DFSTest {
 
   @Test
-  public void testSearch() {
-    Graph graph = new GraphImpl();
+  public void testSearch() throws Exception {
+    Graph graph = GraphFactoryTest.loadGraph(GraphFactoryTest.SMALL_GRAPH_INPUT_NAME);
 
-    // a -> b -> c -> d -> e
-    graph.addEdge("a", "b");
-    graph.addEdge("b", "c");
-    graph.addEdge("c", "d");
-    graph.addEdge("d", "e");
-
-    Vertex startVertex = graph.getVertex("a");
+    Vertex startVertex = graph.getVertex("1");
 
     Deque<Vertex> recursivelyTraversedVertices = DFS.searchRecursive(graph, startVertex);
 

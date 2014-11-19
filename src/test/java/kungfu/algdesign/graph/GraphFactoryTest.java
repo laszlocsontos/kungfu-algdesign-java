@@ -40,10 +40,15 @@ public class GraphFactoryTest {
   @Test
   public void testLoad() throws Exception {
     loadGraph(LARGE_GRAPH_INPUT_NAME);
-    loadGraph(LARGE_GRAPH_INPUT_NAME);
+    loadGraph(MEDIUM_GRAPH_INPUT_NAME);
+    loadGraph(SMALL_GRAPH_INPUT_NAME);
   }
 
   public static final String LARGE_GRAPH_INPUT_NAME = "SCC_large.txt.gz";
+
+  // Taken from http://algs4.cs.princeton.edu/42directed/mediumDG.txt
+  public static final String MEDIUM_GRAPH_INPUT_NAME = "SCC_medium.txt.gz";
+
   public static final String SMALL_GRAPH_INPUT_NAME = "SCC_small.txt.gz";
 
 }

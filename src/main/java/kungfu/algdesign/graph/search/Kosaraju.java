@@ -19,6 +19,7 @@
 package kungfu.algdesign.graph.search;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Deque;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -40,7 +41,7 @@ public final class Kosaraju {
   public static Collection<Graph> findSCCs(Graph graph) {
     Collection<Graph> sccs = new LinkedList<Graph>();
 
-    Deque<Vertex> finishedVertices = new LinkedList<Vertex>(); 
+    Deque<Deque<Vertex>> finishedVertices = new LinkedList<Deque<Vertex>>(); 
 
     Iterator<Vertex> verticesIterator = graph.verticesIterator();
 
@@ -53,15 +54,25 @@ public final class Kosaraju {
 
       Deque<Vertex> traversedVertices = DFS.searchIterative(graph, vertex);
 
-      finishedVertices.addAll(traversedVertices);
+      finishedVertices.push(traversedVertices);
+    }
+
+    if (finishedVertices.isEmpty()) {
+      return Collections.emptyList();
     }
 
     graph.reset();
 
-    Set<Vertex> removedVertices = new HashSet<Vertex>();
+    Set<Vertex> removedVertices = new HashSet<>();
 
-    while (!finishedVertices.isEmpty()) {
-      Vertex vertex = finishedVertices.pop();
+    Deque<Vertex> stack = finishedVertices.pop();
+
+    while (!stack.isEmpty()) {
+      Vertex vertex = stack.pop();
+
+      if (stack.isEmpty() && !finishedVertices.isEmpty()) {
+        stack = finishedVertices.pop();
+      }
 
       if (removedVertices.contains(vertex)) {
         continue;
@@ -69,7 +80,7 @@ public final class Kosaraju {
 
       Deque<Vertex> traversedVertices = DFS.searchIterative(graph, vertex, true);
 
-      graph.removeVertices(traversedVertices);;
+      graph.removeVertices(traversedVertices);
       removedVertices.addAll(traversedVertices);
 
       Graph subGraph = new GraphImpl(traversedVertices);
