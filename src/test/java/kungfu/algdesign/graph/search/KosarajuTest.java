@@ -18,8 +18,11 @@
 
 package kungfu.algdesign.graph.search;
 
-import java.io.IOException;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -28,7 +31,6 @@ import com.google.common.collect.Lists;
 
 import kungfu.algdesign.graph.Graph;
 import kungfu.algdesign.graph.GraphTest;
-import kungfu.algdesign.graph.InvalidGraphException;
 import kungfu.algdesign.graph.MockGraph;
 import kungfu.algdesign.graph.Vertex;
 
@@ -41,9 +43,37 @@ public class KosarajuTest {
   public void testFindSCCsLargeInput() throws Exception {
     Graph graph = GraphTest.loadLargeGraph();
 
-    Collection<Graph> sccs = Kosaraju.findSCCs(graph);
+    List<Graph> sccs = (List<Graph>) Kosaraju.findSCCs(graph);
 
-    System.out.println(sccs.size());
+    Assert.assertEquals(167054, sccs.size());
+
+    Collections.sort(sccs, new Comparator<Graph>() {
+
+      @Override
+      public int compare(Graph g1, Graph g2) {
+        int s1 = g1.size();
+        int s2 = g2.size();
+
+        if (s1 == s2) {
+          return 0;
+        } else if (s1 < s2) {
+          return 1;
+        } else {
+          return -1;
+        }
+      }
+
+    });
+
+    int index = 0;
+
+    Iterator<Graph> iterator = sccs.iterator();
+
+    while (index++ < 5 && iterator.hasNext()) {
+      Graph scc = iterator.next();
+
+      System.out.println(scc.size());
+    }
   }
 
   @Test

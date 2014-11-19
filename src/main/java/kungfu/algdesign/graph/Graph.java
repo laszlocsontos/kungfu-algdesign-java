@@ -69,7 +69,7 @@ public class Graph {
     vertices = new LinkedHashMap<>();
   }
 
-  public Graph(Set<Vertex> vertices) {
+  public Graph(Collection<Vertex> vertices) {
     this();
 
     addVertices(vertices);
@@ -99,8 +99,14 @@ public class Graph {
     return vertex;
   }
 
-  public void addVertices(Set<Vertex> vertices) {
+  public void addVertices(Collection<Vertex> vertices) {
     for (Vertex vertex : vertices) {
+      String vertexName = vertex.getName();
+
+      if (this.vertices.containsKey(vertexName)) {
+        continue;
+      }
+
       this.vertices.put(vertex.getName(), vertex);
     }
   }
@@ -153,7 +159,7 @@ public class Graph {
     vertices.remove(vertex);
   }
 
-  public void removeVertices(Set<Vertex> vertices) {
+  public void removeVertices(Collection<Vertex> vertices) {
     for (Vertex vertex : vertices) {
       removeVertex(vertex);
     }
