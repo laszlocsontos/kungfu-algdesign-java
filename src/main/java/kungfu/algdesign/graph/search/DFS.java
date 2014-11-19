@@ -93,25 +93,43 @@ public final class DFS {
   }
 
   public static Deque<Vertex> searchRecursive(Graph graph, Vertex vertex) {
+    return searchRecursive(graph, vertex, false);
+  }
+
+  public static Deque<Vertex> searchRecursive(Graph graph, Vertex vertex, boolean reverse) {
     Deque<Vertex> traversedVertices = new LinkedList<Vertex>();
 
-    doSearchRecursive(graph, vertex, traversedVertices);
+    doSearchRecursive(graph, vertex, traversedVertices, reverse);
 
-    graph.reset();
+    // graph.reset();
 
     return traversedVertices;
   }
 
   private static void doSearchRecursive(
-    Graph graph, Vertex vertex, Deque<Vertex> traversedVertices) {
+    Graph graph, Vertex vertex, Deque<Vertex> traversedVertices, boolean reverse) {
 
     vertex.visit();
 
-    for (Edge edge : vertex.getOutgoingEdges()) {
-      Vertex head = edge.getHead();
+    Collection<Edge> edges = null;
 
-      if (!head.isVisited()) {
-        doSearchRecursive(graph, head, traversedVertices);
+    if (reverse) {
+      edges = vertex.getIncomingEdges();
+    } else {
+      edges = vertex.getOutgoingEdges();
+    }
+
+    for (Edge edge : edges) {
+      Vertex next = null;
+
+      if (reverse) {
+        next = edge.getTail();
+      } else {
+        next = edge.getHead();
+      }
+
+      if (!next.isVisited()) {
+        doSearchRecursive(graph, next, traversedVertices, reverse);
       }
     }
 
