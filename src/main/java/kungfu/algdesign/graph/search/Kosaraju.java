@@ -19,10 +19,9 @@
 package kungfu.algdesign.graph.search;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Deque;
-import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.Set;
 
 import kungfu.algdesign.graph.Graph;
 import kungfu.algdesign.graph.Vertex;
@@ -40,7 +39,7 @@ public final class Kosaraju {
 
     Collection<Vertex> allVertices = graph.getVertices();
 
-    Deque<Vertex> finishedVertices = new LinkedList<Vertex>(); 
+    Deque<Deque<Vertex>> finishedVertices = new LinkedList<Deque<Vertex>>(); 
 
     for (Vertex vertex : allVertices) {
       if (vertex.isVisited()) {
@@ -48,25 +47,34 @@ public final class Kosaraju {
       }
 
       Deque<Vertex> traversedVertices = DFS.searchIterative(graph, vertex);
+      // Deque<Vertex> traversedVertices = DFS.searchRecursive(graph, vertex);
 
-      finishedVertices.addAll(traversedVertices);
+      finishedVertices.push(traversedVertices);
+    }
+
+    if (finishedVertices.isEmpty()) {
+      return Collections.emptyList();
     }
 
     graph.reset();
 
-    Set<Vertex> removedVertices = new HashSet<Vertex>();
+    Deque<Vertex> stack = finishedVertices.pop();
 
-    while (!finishedVertices.isEmpty()) {
-      Vertex vertex = finishedVertices.pop();
+    while (!stack.isEmpty()) {
+      Vertex vertex = stack.pop();
 
-      if (removedVertices.contains(vertex)) {
+      if (stack.isEmpty() && !finishedVertices.isEmpty()) {
+        stack = finishedVertices.pop();
+      }
+
+      if (vertex.isVisited()) {
         continue;
       }
 
       Deque<Vertex> traversedVertices = DFS.searchIterative(graph, vertex, true);
+      // Deque<Vertex> traversedVertices = DFS.searchRecursive(graph, vertex, true);
 
       graph.removeVertices(traversedVertices);;
-      removedVertices.addAll(traversedVertices);
 
       Graph subGraph = new Graph(traversedVertices);
 

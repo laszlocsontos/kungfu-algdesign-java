@@ -45,6 +45,11 @@ public class GraphTest {
   }
 
   public static final String LARGE_GRAPH_INPUT_NAME = "SCC_large.txt.gz";
+
+  // Taken from http://algs4.cs.princeton.edu/42directed/mediumDG.txt
+  public static final String MEDIUM_GRAPH_INPUT_NAME = "SCC_medium.txt.gz";
+
+  
   public static final String SMALL_GRAPH_INPUT_NAME = "SCC_small.txt.gz";
 
 }

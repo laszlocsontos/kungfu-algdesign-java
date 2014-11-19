@@ -21,6 +21,7 @@ package kungfu.algdesign.graph.search;
 import java.util.Deque;
 
 import kungfu.algdesign.graph.Graph;
+import kungfu.algdesign.graph.GraphTest;
 import kungfu.algdesign.graph.MockGraph;
 import kungfu.algdesign.graph.Vertex;
 
@@ -33,18 +34,15 @@ import org.junit.Test;
 public class DFSTest {
 
   @Test
-  public void testSearch() {
-    Graph graph = new Graph();
+  public void testSearch() throws Exception {
+    Graph graph = GraphTest.loadLargeGraph(GraphTest.SMALL_GRAPH_INPUT_NAME);
 
-    // a -> b -> c -> d -> e
-    graph.addEdge("b", "a");
-    graph.addEdge("c", "b");
-    graph.addEdge("d", "c");
-    graph.addEdge("e", "d");
-
-    Vertex startVertex = graph.getVertex("a");
+    Vertex startVertex = graph.getVertex("1");
 
     Deque<Vertex> recursivelyTraversedVertices = DFS.searchRecursive(graph, startVertex);
+
+    graph.reset();
+
     Deque<Vertex> iterativelyTraversedVertices = DFS.searchIterative(graph, startVertex);
 
     Assert.assertEquals(recursivelyTraversedVertices, iterativelyTraversedVertices);
@@ -54,6 +52,9 @@ public class DFSTest {
     startVertex = graph.getVertex("a");
 
     recursivelyTraversedVertices = DFS.searchRecursive(graph, startVertex);
+
+    graph.reset();
+
     iterativelyTraversedVertices = DFS.searchIterative(graph, startVertex);
 
     Assert.assertEquals(recursivelyTraversedVertices, iterativelyTraversedVertices);

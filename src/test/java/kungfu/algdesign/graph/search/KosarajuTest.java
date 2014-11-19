@@ -45,9 +45,8 @@ public class KosarajuTest {
 
     Collection<Graph> sccs = doTest(graph, null);
 
-    Assert.assertEquals(167054, sccs.size());
+    // Assert.assertEquals(167054, sccs.size());
 
-    /*
     int index = 0;
 
     Iterator<Graph> iterator = sccs.iterator();
@@ -57,7 +56,15 @@ public class KosarajuTest {
 
       System.out.println(scc.size());
     }
-    */
+  }
+
+  @Test
+  public void testFindSCCsMediumInput() throws Exception {
+    Graph graph = GraphTest.loadLargeGraph(GraphTest.MEDIUM_GRAPH_INPUT_NAME);
+
+    Collection<Graph> sccs = doTest(graph, new int[] { 35, 7, 1, 1, 1, 1, 1, 1, 1, 1 });
+
+    Assert.assertEquals(10, sccs.size());
   }
 
   @Test
@@ -91,6 +98,8 @@ public class KosarajuTest {
   }
 
   private Collection<Graph> doTest(Graph graph, int[] expectedSCCsizes) {
+    int expectedSize = graph.size();
+
     List<Graph> sccs = (List<Graph>) Kosaraju.findSCCs(graph);
 
     Assert.assertNotNull(sccs);
@@ -102,7 +111,7 @@ public class KosarajuTest {
       vertexCount += scc.size();
     }
 
-    Assert.assertEquals("Vertex count mismatch.", graph.size(), vertexCount);
+    Assert.assertEquals("Vertex count mismatch.", expectedSize, vertexCount);
 
     if (expectedSCCsizes != null) {
       Collections.sort(sccs, new Comparator<Graph>() {
