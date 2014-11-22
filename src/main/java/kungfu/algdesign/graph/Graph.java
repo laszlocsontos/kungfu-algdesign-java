@@ -26,7 +26,11 @@ import java.util.Iterator;
  */
 public interface Graph {
 
+  Edge addEdge(Edge edge);
+
   Edge addEdge(String headName, String tailName);
+
+  Edge addEdge(String tailName, String headName, Integer weight);
 
   Vertex addVertex(String name);
 

@@ -45,11 +45,21 @@ public class GraphImpl implements Graph {
   }
 
   @Override
+  public Edge addEdge(Edge edge) {
+    return addEdge(edge.getTail(), edge.getHead(), edge.getWeight());
+  }
+
+  @Override
   public Edge addEdge(String tailName, String headName) {
+    return addEdge(tailName, headName, null);
+  }
+
+  @Override
+  public Edge addEdge(String tailName, String headName, Integer weight) {
     Vertex head = addVertex(headName);
     Vertex tail = addVertex(tailName);
   
-    return addEdge(tail, head);
+    return addEdge(tail, head, weight);
   }
 
   @Override
@@ -153,7 +163,7 @@ public class GraphImpl implements Graph {
         String headName = edge.getHead().getName();
         String tailName = edge.getTail().getName();
 
-        reverseGraph.addEdge(headName, tailName);
+        reverseGraph.addEdge(headName, tailName, edge.getWeight());
       }
     }
 
@@ -179,8 +189,11 @@ public class GraphImpl implements Graph {
     visitedVerices.add(vertex);
   }
 
-  private Edge addEdge(Vertex tail, Vertex head) {
-    Edge edge = new Edge(tail, head);
+  private Edge addEdge(Vertex tail, Vertex head, Integer weight) {
+    tail = ensureVertex(tail);
+    head = ensureVertex(head);
+
+    Edge edge = new Edge(tail, head, weight);
 
     head.addIncomingEdge(edge);
     tail.addOutgoingEdge(edge);
@@ -192,6 +205,12 @@ public class GraphImpl implements Graph {
     if (!verticesMap.containsValue(vertex)) {
       throw new NoSuchVertexException();
     }
+  }
+
+  private Vertex ensureVertex(Vertex vertex) {
+    String vertexName = vertex.getName();
+
+    return addVertex(vertexName);
   }
 
   private final Map<String, Vertex> verticesMap;

@@ -29,6 +29,10 @@ import com.google.common.base.MoreObjects.ToStringHelper;
 public class Edge {
 
   public Edge(Vertex tail, Vertex head) {
+    this(tail, head, null);
+  }
+
+  public Edge(Vertex tail, Vertex head, Integer weight) {
     if (head == null) {
       throw new IllegalArgumentException("head cannot be null.");
     }
@@ -39,6 +43,7 @@ public class Edge {
 
     this.head = head;
     this.tail = tail;
+    this.weight = weight;
   }
 
   @Override
@@ -68,6 +73,10 @@ public class Edge {
     return tail;
   }
 
+  public Integer getWeight() {
+    return weight;
+  }
+
   @Override
   public int hashCode() {
     return Objects.hash(head, tail);
@@ -82,5 +91,6 @@ public class Edge {
 
   private final Vertex head;
   private final Vertex tail;
+  private final Integer weight;
 
 }

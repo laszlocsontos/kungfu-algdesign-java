@@ -22,8 +22,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author lcsontos
@@ -35,42 +33,12 @@ public final class GraphFactory {
 
     BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 
-    Graph graph = new GraphImpl();
+    GraphParser graphParser = new GraphParser();
 
-    String line = null;
-
-    int lineNumber = 0;
-
-    try {
-      while ((line = bufferedReader.readLine()) != null) {
-        lineNumber++;
-
-        Matcher matcher = EDGE_FORMAT_PATTERN.matcher(line);
-
-        if (!matcher.find()) {
-          StringBuilder sb = new StringBuilder();
-
-          sb.append("Format of line #");
-          sb.append(lineNumber);
-          sb.append(" is invalid: \"");
-          sb.append(line);
-          sb.append("\".");
-
-          throw new InvalidGraphException(sb.toString());
-        }
-
-        graph.addEdge(matcher.group(1), matcher.group(2));
-      }
-    } catch (IOException ioe) {
-      throw new InvalidGraphException("Error reading graph", ioe);
-    }
-
-    return graph;
+    return graphParser.read(bufferedReader);
   }
 
   private GraphFactory() {
   }
-
-  private static final Pattern EDGE_FORMAT_PATTERN = Pattern.compile("^(\\w+)(?:\\s+)(\\w+)");
 
 }
