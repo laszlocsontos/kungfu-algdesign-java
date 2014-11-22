@@ -18,6 +18,9 @@
 
 package kungfu.algdesign.graph;
 
+import java.util.Collection;
+import java.util.Iterator;
+
 /**
  * @author lcsontos
  */
@@ -27,15 +30,25 @@ public interface Graph {
 
   Vertex addVertex(String name);
 
+  void addVertices(Collection<Vertex> vertices);
+
   Vertex getVertex(String name);
 
   boolean isVisited(Vertex vertex);
+
+  void removeVertex(String name);
+
+  void removeVertex(Vertex vertex);
+
+  void removeVertices(Collection<Vertex> vertices);
 
   void reset();
 
   Graph reverse();
 
   int size();
+
+  Iterator<Vertex> verticesIterator();
 
   void visit(Vertex vertex);
 

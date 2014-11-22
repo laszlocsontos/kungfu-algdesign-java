@@ -18,9 +18,13 @@
 
 package kungfu.algdesign.graph;
 
+import java.util.Collection;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import com.google.common.collect.ImmutableSet;
 
 /**
  * @author lcsontos
@@ -54,6 +58,18 @@ public class GraphTest {
   }
 
   @Test
+  public void testAddVertices() {
+    Collection<Vertex> vertices = ImmutableSet.of(
+      new Vertex("x"), new Vertex("y"), new Vertex("z"));
+
+    graph.addVertices(vertices);
+
+    Assert.assertNotNull(graph.getVertex("x"));
+    Assert.assertNotNull(graph.getVertex("y"));
+    Assert.assertNotNull(graph.getVertex("z"));
+  }
+
+  @Test
   public void testGetVertex() {
     Assert.assertNotNull(graph.getVertex("a"));
     Assert.assertNull(graph.getVertex("z"));
@@ -68,6 +84,21 @@ public class GraphTest {
     graph.visit(vertex);
 
     Assert.assertTrue(graph.isVisited(vertex));
+  }
+
+  @Test
+  public void testRemoveVertex() {
+    graph.addEdge("b", "c");
+    graph.addEdge("c", "d");
+    graph.addEdge("d", "e");
+
+    graph.removeVertex("c");
+
+    testEdges(graph, "a", "b");
+    testEdges(graph, "d", "e");
+
+    Assert.assertFalse(graph.getVertex("b").outgoingEdgesIterator().hasNext());
+    Assert.assertFalse(graph.getVertex("d").incomingEdgesIterator().hasNext());
   }
 
   @Test

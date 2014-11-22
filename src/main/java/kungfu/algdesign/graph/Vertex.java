@@ -69,6 +69,14 @@ public class Vertex {
     outgoingEdges.add(edge);
   }
 
+  public void clearIncomingEdges() {
+    incomingEdges.clear();
+  }
+
+  public void clearOutgoingEdges() {
+    outgoingEdges.clear();
+  }
+
   public Iterator<Edge> incomingEdgesIterator() {
     return incomingEdges.iterator();
   }

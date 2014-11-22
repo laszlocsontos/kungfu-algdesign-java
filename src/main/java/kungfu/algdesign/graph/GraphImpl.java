@@ -18,6 +18,7 @@
 
 package kungfu.algdesign.graph;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -35,6 +36,12 @@ public class GraphImpl implements Graph {
   public GraphImpl() {
     verticesMap = new HashMap<>();
     visitedVerices = new HashSet<Vertex>();
+  }
+
+  public GraphImpl(Collection<Vertex> vertices) {
+    this();
+
+    addVertices(vertices);
   }
 
   @Override
@@ -59,8 +66,26 @@ public class GraphImpl implements Graph {
   }
 
   @Override
+  public void addVertices(Collection<Vertex> vertices) {
+    for (Vertex vertex : vertices) {
+      if (verticesMap.containsValue(vertex)) {
+        continue;
+      }
+
+      verticesMap.put(vertex.getName(), vertex);
+    }
+  }
+
+  @Override
   public Vertex getVertex(String name) {
     return verticesMap.get(name);
+  }
+
+  @Override
+  public Iterator<Vertex> verticesIterator() {
+    Collection<Vertex> vertices = verticesMap.values();
+
+    return vertices.iterator();
   }
 
   @Override
@@ -68,6 +93,48 @@ public class GraphImpl implements Graph {
     checkVertex(vertex);
 
     return visitedVerices.contains(vertex);
+  }
+
+  @Override
+  public void removeVertex(String name) {
+    Vertex vertex = getVertex(name);
+
+    removeVertex(vertex);
+  }
+
+  @Override
+  public void removeVertex(Vertex vertex) {
+    checkVertex(vertex);
+
+    for (Iterator<Edge> iterator = vertex.incomingEdgesIterator(); iterator.hasNext();) {
+      Edge edge = (Edge) iterator.next();
+
+      Vertex tail = edge.getTail();
+
+      tail.removeOutgoingEdge(edge);
+    }
+
+    vertex.clearIncomingEdges();
+
+    for (Iterator<Edge> iterator = vertex.outgoingEdgesIterator(); iterator.hasNext();) {
+      Edge edge = (Edge) iterator.next();
+
+      Vertex head = edge.getHead();
+
+      head.removeIncomingEdge(edge);
+    }
+
+    vertex.clearOutgoingEdges();
+
+    verticesMap.remove(vertex);
+    visitedVerices.remove(vertex);
+  }
+
+  @Override
+  public void removeVertices(Collection<Vertex> vertices) {
+    for (Vertex vertex : vertices) {
+      removeVertex(vertex);
+    }
   }
 
   @Override
