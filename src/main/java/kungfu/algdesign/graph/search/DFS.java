@@ -19,6 +19,7 @@
 package kungfu.algdesign.graph.search;
 
 import java.util.Deque;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 import kungfu.algdesign.graph.Edge;
@@ -33,7 +34,7 @@ public final class DFS {
   private DFS() {
   }
 
-  public static Deque<Vertex> search(Graph graph, Vertex vertex) {
+  public static Deque<Vertex> searchIterative(Graph graph, Vertex vertex) {
     Deque<Vertex> traversedVertices = new LinkedList<Vertex>();
 
     Deque<Vertex> stack = new LinkedList<Vertex>();
@@ -43,10 +44,12 @@ public final class DFS {
     while (!stack.isEmpty()) {
       vertex = stack.pop();
 
-      if (!vertex.isVisited()) {
-        vertex.visit();
+      if (graph.isVisited(vertex)) {
+        graph.visit(vertex);
 
-        for (Edge edge : vertex.getOutgoingEdges()) {
+        for (Iterator<Edge> iterator = vertex.outgoingEdgesIterator(); iterator.hasNext();) {
+          Edge edge = iterator.next();
+
           stack.push(edge.getHead());
         }
 
@@ -55,6 +58,34 @@ public final class DFS {
     }
 
     return traversedVertices;
+  }
+
+  public static Deque<Vertex> searchRecursive(Graph graph, Vertex vertex) {
+    Deque<Vertex> traversedVertices = new LinkedList<Vertex>();
+
+    doSearchRecursive(graph, vertex, traversedVertices);
+
+    graph.reset();
+
+    return traversedVertices;
+  }
+
+  private static void doSearchRecursive(
+    Graph graph, Vertex vertex, Deque<Vertex> traversedVertices) {
+
+    graph.visit(vertex);
+
+    for (Iterator<Edge> iterator = vertex.outgoingEdgesIterator(); iterator.hasNext();) {
+      Edge edge = iterator.next();
+
+      Vertex head = edge.getHead();
+
+      if (!graph.isVisited(head)) {
+        doSearchRecursive(graph, head, traversedVertices);
+      }
+    }
+
+    traversedVertices.push(vertex);
   }
 
 }
