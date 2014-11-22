@@ -38,11 +38,11 @@ public class GraphImpl implements Graph {
   }
 
   @Override
-  public Edge addEdge(String headName, String tailName) {
+  public Edge addEdge(String tailName, String headName) {
     Vertex head = addVertex(headName);
     Vertex tail = addVertex(tailName);
   
-    return addEdge(head, tail);
+    return addEdge(tail, head);
   }
 
   @Override
@@ -86,7 +86,7 @@ public class GraphImpl implements Graph {
         String headName = edge.getHead().getName();
         String tailName = edge.getTail().getName();
 
-        reverseGraph.addEdge(tailName, headName);
+        reverseGraph.addEdge(headName, tailName);
       }
     }
 
@@ -112,8 +112,8 @@ public class GraphImpl implements Graph {
     visitedVerices.add(vertex);
   }
 
-  private Edge addEdge(Vertex head, Vertex tail) {
-    Edge edge = new Edge(head, tail);
+  private Edge addEdge(Vertex tail, Vertex head) {
+    Edge edge = new Edge(tail, head);
 
     head.addIncomingEdge(edge);
     tail.addOutgoingEdge(edge);

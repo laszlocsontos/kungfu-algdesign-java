@@ -31,7 +31,7 @@ public class GraphTest {
   public void setUp() {
     graph = new GraphImpl();
 
-    graph.addEdge("b", "a");
+    graph.addEdge("a", "b");
   }
 
   @Test
@@ -48,7 +48,7 @@ public class GraphTest {
     Assert.assertFalse(newVertex.incomingEdgesIterator().hasNext());
     Assert.assertFalse(newVertex.outgoingEdgesIterator().hasNext());
 
-    graph.addEdge("c", "b");
+    graph.addEdge("b", "c");
 
     testEdges(graph, "b", "c");
   }

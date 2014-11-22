@@ -28,7 +28,7 @@ import com.google.common.base.MoreObjects.ToStringHelper;
  */
 public class Edge {
 
-  public Edge(Vertex head, Vertex tail) {
+  public Edge(Vertex tail, Vertex head) {
     if (head == null) {
       throw new IllegalArgumentException("head cannot be null.");
     }

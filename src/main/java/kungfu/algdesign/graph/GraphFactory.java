@@ -59,7 +59,7 @@ public final class GraphFactory {
           throw new InvalidGraphException(sb.toString());
         }
 
-        graph.addEdge(matcher.group(2), matcher.group(1));
+        graph.addEdge(matcher.group(1), matcher.group(2));
       }
     } catch (IOException ioe) {
       throw new InvalidGraphException("Error reading graph", ioe);
