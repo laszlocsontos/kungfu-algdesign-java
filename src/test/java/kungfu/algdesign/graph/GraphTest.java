@@ -75,7 +75,7 @@ public class GraphTest {
     Assert.assertNull(graph.getVertex("z"));
   }
 
-  @Test
+  @Test(expected = NoSuchVertexException.class)
   public void testIsVisited() {
     Vertex vertex = graph.getVertex("a");
 
@@ -84,6 +84,9 @@ public class GraphTest {
     graph.visit(vertex);
 
     Assert.assertTrue(graph.isVisited(vertex));
+
+    graph.removeVertex(vertex);
+    graph.isVisited(vertex);
   }
 
   @Test
@@ -92,7 +95,11 @@ public class GraphTest {
     graph.addEdge("c", "d");
     graph.addEdge("d", "e");
 
+    Assert.assertEquals(5, graph.size());
+
     graph.removeVertex("c");
+
+    Assert.assertEquals(4, graph.size());
 
     testEdges(graph, "a", "b");
     testEdges(graph, "d", "e");

@@ -136,7 +136,7 @@ public class GraphImpl implements Graph {
 
     vertex.clearOutgoingEdges();
 
-    verticesMap.remove(vertex);
+    verticesMap.remove(vertex.getName());
     visitedVerices.remove(vertex);
   }
 
@@ -202,7 +202,7 @@ public class GraphImpl implements Graph {
   }
 
   private void checkVertex(Vertex vertex) {
-    if (!verticesMap.containsValue(vertex)) {
+    if (!verticesMap.containsKey(vertex.getName())) {
       throw new NoSuchVertexException();
     }
   }
