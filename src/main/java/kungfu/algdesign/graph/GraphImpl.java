@@ -78,7 +78,9 @@ public class GraphImpl implements Graph {
   @Override
   public void addVertices(Collection<Vertex> vertices) {
     for (Vertex vertex : vertices) {
-      if (verticesMap.containsValue(vertex)) {
+      String vertexName = vertex.getName();
+
+      if (verticesMap.containsKey(vertexName)) {
         continue;
       }
 
