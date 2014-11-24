@@ -25,11 +25,12 @@ import java.util.Objects;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.MoreObjects.ToStringHelper;
+import com.google.common.collect.ComparisonChain;
 
 /**
  * @author lcsontos
  */
-public class Vertex {
+public class Vertex implements Comparable<Vertex> {
 
   public Vertex(String name) {
     if (name == null) {
@@ -77,6 +78,15 @@ public class Vertex {
     outgoingEdges.clear();
   }
 
+  @Override
+  public int compareTo(Vertex vertex) {
+    if (vertex == null) {
+      return -1;
+    }
+
+    return ComparisonChain.start().compare(distance, vertex.distance).result();
+  }
+
   public Iterator<Edge> incomingEdgesIterator() {
     return incomingEdges.iterator();
   }
@@ -93,6 +103,10 @@ public class Vertex {
     outgoingEdges.remove(edge);
   }
 
+  public int getDistance() {
+    return distance;
+  }
+
   public String getName() {
     return name;
   }
@@ -100,6 +114,10 @@ public class Vertex {
   @Override
   public int hashCode() {
     return name.hashCode();
+  }
+
+  public void setDistance(int distance) {
+    this.distance = distance;
   }
 
   @Override
@@ -113,5 +131,7 @@ public class Vertex {
 
   private final Collection<Edge> incomingEdges;
   private final Collection<Edge> outgoingEdges;
+
+  private int distance = Integer.MAX_VALUE;
 
 }
