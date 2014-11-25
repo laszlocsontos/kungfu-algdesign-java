@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.common.primitives.Ints;
+import com.google.common.primitives.Longs;
 
 /**
  * @author lcsontos
@@ -74,4 +75,21 @@ public class Utils {
 
     return integerList.toArray(integerArray);
   }
+
+  public static long[] getLongArray(InputStream inputStream) throws IOException {
+    InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+
+    BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+    List<Long> longList = new ArrayList<>();
+
+    String line = null;
+
+    while ((line = bufferedReader.readLine()) != null) {
+      longList.add(Long.valueOf(line));
+    }
+
+    return Longs.toArray(longList);
+  }
+
 }
