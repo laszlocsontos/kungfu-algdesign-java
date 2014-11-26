@@ -18,8 +18,14 @@
 
 package kungfu.algdesign.ds;
 
+import java.io.InputStream;
+import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
+import java.util.zip.GZIPInputStream;
+
+import kungfu.algdesign.util.Utils;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -29,6 +35,27 @@ import org.junit.Test;
  */
 public class MovingMedianTest {
 
+  @SuppressWarnings("unchecked")
+  @Test
+  public void testLargeInputCalculate() throws Exception {
+    InputStream inputStream = new GZIPInputStream(
+      Utils.getInputStreamForResource(MEDIAN_INPUT_NAME));
+
+    List<Integer> data = Utils.getIntegerList(inputStream);
+
+    Queue<Integer> medians = doTest((Queue<Integer>) data, null);
+
+    long sum = 0;
+
+    for (Iterator<Integer> iterator = medians.iterator(); iterator.hasNext();) {
+      Integer median = (Integer) iterator.next();
+
+      sum += median.intValue();
+    }
+
+    Assert.assertEquals(1213, sum);
+  }
+
   @Test
   public void testSmallInputCalculate() {
     Queue<Integer> data = new LinkedList<>();
@@ -37,11 +64,6 @@ public class MovingMedianTest {
     data.add(15);
     data.add(1);
     data.add(3);
-    data.add(null);
-
-    Queue<Integer> medians = new LinkedList<>();
-
-    MovingMedian.calculate(data, medians);
 
     Queue<Integer> expected = new LinkedList<>();
 
@@ -50,7 +72,27 @@ public class MovingMedianTest {
     expected.add(5);
     expected.add(3);
 
-    Assert.assertEquals(expected, medians);
+    doTest(data, expected);
   }
+
+  private Queue<Integer> doTest(Queue<Integer> data, Queue<Integer> expected) {
+    int dataSize = data.size();
+
+    Queue<Integer> medians = new LinkedList<>();
+
+    MovingMedian.calculate(data, medians);
+
+    Assert.assertEquals(0, data.size());
+    Assert.assertEquals(dataSize, medians.size());
+
+    if (expected != null) {
+      Assert.assertEquals(expected, medians);
+    }
+
+    return medians;
+  }
+
+  private static final String MEDIAN_INPUT_NAME = "Median.txt.gz";
+
 
 }

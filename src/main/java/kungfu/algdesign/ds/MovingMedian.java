@@ -35,9 +35,12 @@ public class MovingMedian {
     maxHeap.add(Integer.MAX_VALUE);
 
     Integer item = null;
+    Integer median = null;
 
     while ((item = data.poll()) != null) {
-      if (item >= maxHeap.peekLast()) {
+      if (median == null) {
+        maxHeap.add(item);
+      } else if (item >= median) {
         maxHeap.add(item);
       } else {
         minHeap.add(item);
@@ -50,10 +53,12 @@ public class MovingMedian {
       }
 
       if (minHeap.size() == maxHeap.size() || minHeap.size() > maxHeap.size()) {
-        medians.add(minHeap.peekLast());
+        median = minHeap.peekLast();
       } else {
-        medians.add(maxHeap.peekFirst());
+        median = maxHeap.peekFirst();
       }
+
+      medians.add(median);
     }
   }
 

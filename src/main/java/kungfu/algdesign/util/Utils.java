@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import com.google.common.primitives.Ints;
@@ -59,11 +60,19 @@ public class Utils {
   }
 
   public static Integer[] getIntegerArray(InputStream inputStream) throws IOException {
+    List<Integer> integerList = getIntegerList(inputStream);
+
+    Integer[] integerArray = new Integer[integerList.size()];
+
+    return integerList.toArray(integerArray);
+  }
+
+  public static List<Integer> getIntegerList(InputStream inputStream) throws IOException {
     InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
 
     BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 
-    List<Integer> integerList = new ArrayList<>();
+    List<Integer> integerList = new LinkedList<>();
 
     String line = null;
 
@@ -71,9 +80,7 @@ public class Utils {
       integerList.add(Integer.valueOf(line));
     }
 
-    Integer[] integerArray = new Integer[integerList.size()];
-
-    return integerList.toArray(integerArray);
+    return integerList;
   }
 
   public static long[] getLongArray(InputStream inputStream) throws IOException {
