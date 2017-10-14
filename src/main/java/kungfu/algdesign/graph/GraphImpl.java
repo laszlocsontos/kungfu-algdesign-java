@@ -27,11 +27,15 @@ import java.util.Set;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.MoreObjects.ToStringHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author lcsontos
  */
 public class GraphImpl implements Graph {
+
+  private static final Logger LOGGER = LoggerFactory.getLogger(GraphImpl.class);
 
   public GraphImpl() {
     verticesMap = new HashMap<>();
@@ -94,17 +98,17 @@ public class GraphImpl implements Graph {
   }
 
   @Override
-  public Iterator<Vertex> verticesIterator() {
-    Collection<Vertex> vertices = verticesMap.values();
-
-    return vertices.iterator();
-  }
-
-  @Override
   public boolean isVisited(Vertex vertex) {
     checkVertex(vertex);
 
     return visitedVerices.contains(vertex);
+  }
+
+  @Override
+  public Iterator<Vertex> iterator() {
+    Collection<Vertex> vertices = verticesMap.values();
+
+    return vertices.iterator();
   }
 
   @Override
@@ -189,6 +193,7 @@ public class GraphImpl implements Graph {
     checkVertex(vertex);
 
     visitedVerices.add(vertex);
+    LOGGER.info("Visited {}.", vertex);
   }
 
   private Edge addEdge(Vertex tail, Vertex head, Integer weight) {

@@ -43,7 +43,7 @@ public final class Kosaraju {
 
     Deque<Deque<Vertex>> finishedVertices = new LinkedList<Deque<Vertex>>(); 
 
-    Iterator<Vertex> verticesIterator = graph.verticesIterator();
+    Iterator<Vertex> verticesIterator = graph.iterator();
 
     while (verticesIterator.hasNext()) {
       Vertex vertex = (Vertex) verticesIterator.next();

@@ -18,11 +18,13 @@
 
 package kungfu.algdesign.graph.search;
 
+import java.util.Collection;
 import java.util.Deque;
 
 import kungfu.algdesign.graph.Graph;
 import kungfu.algdesign.graph.GraphFactoryTest;
 import kungfu.algdesign.graph.MockGraph;
+import kungfu.algdesign.graph.DirectedAcyclicGraph;
 import kungfu.algdesign.graph.Vertex;
 
 import org.junit.Assert;
@@ -58,6 +60,22 @@ public class DFSTest {
     iterativelyTraversedVertices = DFS.searchIterative(graph, startVertex);
 
     Assert.assertEquals(recursivelyTraversedVertices, iterativelyTraversedVertices);
+  }
+
+  @Test
+  public void testDirectedAcyclicGraphDFS() throws Exception {
+    Graph graph = new DirectedAcyclicGraph();
+
+    Vertex startVertex = graph.getVertex("a");
+
+    Collection<Vertex> traversedVertices = DFS.searchIterative(graph, startVertex);
+
+    for (Vertex vertex : graph) {
+      Assert.assertTrue(
+          "Vertex " + vertex + " wasn't traversed",
+          traversedVertices.contains(vertex)
+      );
+    }
   }
 
 }

@@ -25,6 +25,8 @@ import java.util.LinkedList;
 import kungfu.algdesign.graph.Edge;
 import kungfu.algdesign.graph.Graph;
 import kungfu.algdesign.graph.Vertex;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author lcsontos

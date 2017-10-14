@@ -24,7 +24,7 @@ import java.util.Iterator;
 /**
  * @author lcsontos
  */
-public interface Graph {
+public interface Graph extends Iterable<Vertex> {
 
   Edge addEdge(Edge edge);
 
@@ -51,8 +51,6 @@ public interface Graph {
   Graph reverse();
 
   int size();
-
-  Iterator<Vertex> verticesIterator();
 
   void visit(Vertex vertex);
 
