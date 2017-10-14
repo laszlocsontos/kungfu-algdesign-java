@@ -5,3 +5,5 @@ build
 .settings
 .gradle
 .checkstyle
+.idea
+*.iml
